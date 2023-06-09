@@ -67,10 +67,21 @@ const Tab = styled.span<{ isActive: boolean }>`
   background-color: rgba(0, 0, 0, 0.5);
   padding: 7px 0px;
   border-radius: 10px;
-  color: ${(props) => (props.isActive ? props.theme.accentColor : props.theme.textColor)};
+  color: ${(props) => (props.isActive ? props.theme.accentColor : props.theme.boxColor)};
   a {
     display: block;
   }
+`;
+
+const HomeBtn = styled(Link)`
+  display: block;
+  background-color: blue;
+  border-radius: 20px;
+  width: 100px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  margin-bottom: 25px;
 `;
 
 interface RouteState {
@@ -168,6 +179,7 @@ function Coin() {
       <Header>
         <Title>{state?.name ? state.name : loading ? "Loading..." : infoData?.name}</Title>
       </Header>
+      <HomeBtn to="/">👈🏻 Home</HomeBtn>
       {loading ? (
         <Loader>Loading...</Loader>
       ) : (

@@ -1,6 +1,8 @@
-import { createGlobalStyle } from "styled-components";
+import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
 import Router from "./Router";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { useState } from "react";
+import { lighttheme, darktheme } from "./theme";
 
 const GlobalStyle = createGlobalStyle`
   /* http://meyerweb.com/eric/tools/css/reset/ 
@@ -63,12 +65,28 @@ a{
 }
 `;
 
+const ToggleBtn = styled.button`
+  width: 100px;
+  height: 40px;
+  border: none;
+  border-radius: 15px;
+  margin: 20px 20px;
+`;
+
 function App() {
+  const [theme, setTheme] = useState(false);
+  const ToggleTheme = () => {
+    setTheme((prev) => !prev);
+  };
+
   return (
     <>
-      <GlobalStyle />
-      <Router />
-      <ReactQueryDevtools initialIsOpen={true} />
+      <ThemeProvider theme={theme ? darktheme : lighttheme}>
+        <GlobalStyle />
+        <ToggleBtn onClick={ToggleTheme}>테마변경</ToggleBtn>
+        <Router />
+        <ReactQueryDevtools initialIsOpen={true} />
+      </ThemeProvider>
     </>
   );
 }
