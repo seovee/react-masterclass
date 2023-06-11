@@ -18,9 +18,10 @@ const Header = styled.header`
 const ConinsList = styled.ul``;
 const Coin = styled.li`
   background-color: ${(props) => props.theme.boxColor};
-  color: ${(props) => props.theme.textColor};
+  color: #2f3640;
   margin-bottom: 10px;
   border-radius: 10px;
+  font-size: 18px;
   a {
     display: flex;
     align-items: center;
@@ -35,6 +36,8 @@ const Coin = styled.li`
 `;
 const Title = styled.h1`
   font-size: 48px;
+  font-weight: 700;
+  font-style: italic;
   color: ${(props) => props.theme.accentColor};
 `;
 
@@ -75,7 +78,7 @@ function Coins() {
   return (
     <Container>
       <Header>
-        <Title>코인</Title>
+        <Title>Coin</Title>
       </Header>
       {isLoading ? (
         <Loader>Loading...</Loader>

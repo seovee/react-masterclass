@@ -27,7 +27,11 @@ const Header = styled.header`
 `;
 
 const Loader = styled.span`
+  display: block;
   text-align: center;
+  font-size: 40px;
+  font-weight: 800;
+  color: ${(props) => props.theme.accentColor};
 `;
 
 const Overview = styled.div`
@@ -41,6 +45,7 @@ const OverviewItem = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: ${(props) => props.theme.textColor};
   span:first-child {
     font-size: 10px;
     font-weight: 400;
@@ -75,7 +80,8 @@ const Tab = styled.span<{ isActive: boolean }>`
 
 const HomeBtn = styled(Link)`
   display: block;
-  background-color: blue;
+  background-color: #487eb0;
+  color: white;
   border-radius: 20px;
   width: 100px;
   height: 40px;
