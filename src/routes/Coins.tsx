@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoins } from "../api";
+import DarkmodeBtn from "../DarkmodeBtn";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -18,7 +18,7 @@ const Header = styled.header`
 const ConinsList = styled.ul``;
 const Coin = styled.li`
   background-color: ${(props) => props.theme.boxColor};
-  color: #2f3640;
+  color: ${(props) => props.theme.textColor};
   margin-bottom: 10px;
   border-radius: 10px;
   font-size: 18px;
@@ -61,7 +61,11 @@ interface ICoin {
   type: string;
 }
 
-function Coins() {
+interface ICoinsProps {
+  toggleTheme: () => void;
+}
+
+function Coins({ toggleTheme }: ICoinsProps) {
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
   // const [coins, setCoins] = useState<CoinInterface[]>([]);
   // const [loading, setLoading] = useState(true);
@@ -79,6 +83,7 @@ function Coins() {
     <Container>
       <Header>
         <Title>Coin</Title>
+        <DarkmodeBtn toggleTheme={toggleTheme} />
       </Header>
       {isLoading ? (
         <Loader>Loading...</Loader>

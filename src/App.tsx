@@ -2,8 +2,7 @@ import { ThemeProvider, createGlobalStyle } from "styled-components";
 import Router from "./Router";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { useState } from "react";
-import { lighttheme, darktheme } from "./theme";
-import DarkmodeBtn from "./DarkmodeBtn";
+import { lightTheme, darkTheme } from "./theme";
 
 const GlobalStyle = createGlobalStyle`
   /* http://meyerweb.com/eric/tools/css/reset/ 
@@ -68,17 +67,13 @@ a{
 
 function App() {
   const [theme, setTheme] = useState<boolean>(false);
-
-  const ToggleTheme = () => {
-    setTheme((prev) => !prev);
-  };
+  const toggleTheme = () => setTheme((current) => !current);
 
   return (
     <>
-      <ThemeProvider theme={theme ? darktheme : lighttheme}>
+      <ThemeProvider theme={theme ? darkTheme : lightTheme}>
         <GlobalStyle />
-        <DarkmodeBtn toggleTheme={ToggleTheme} />
-        <Router />
+        <Router isDark={theme} toggleTheme={toggleTheme} />
         <ReactQueryDevtools initialIsOpen={true} />
       </ThemeProvider>
     </>
