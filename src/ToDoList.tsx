@@ -18,8 +18,8 @@ const toDoState = atom<IToDo[]>({
 
 function ToDoList() {
   const [toDos, setToDos] = useRecoilState(toDoState);
-
   const { register, handleSubmit, setValue } = useForm<IForm>();
+
   const onSubmit = ({ toDo }: IForm) => {
     setToDos((oldToDos) => [{ text: toDo, id: Date.now(), category: "TO_DO" }, ...oldToDos]);
     setValue("toDo", "");
