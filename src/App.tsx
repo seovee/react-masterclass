@@ -1,8 +1,7 @@
-import { DragDropContext, DropResult, Droppable } from "react-beautiful-dnd";
+import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { toDoState } from "./atoms";
-import DragabbleCard from "./Components/DragabbleCard";
 import Board from "./Components/Board";
 
 const Wrapper = styled.div`
@@ -25,7 +24,6 @@ function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
   const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
     if (!destination) return;
-
     // setToDos((oldToDos) => {
     //   const toDosCopy = [...oldToDos];
     //   // 1) source.index를 지운다
