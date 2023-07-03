@@ -1,4 +1,13 @@
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import styled from "styled-components";
+
+const Board = styled.div`
+  background-color: ${(props) => props.theme.boardColor};
+`;
+
+const Card = styled.div`
+  background-color: ${(props) => props.theme.cardColor};
+`;
 
 function App() {
   const onDragEnd = () => {};
@@ -7,27 +16,19 @@ function App() {
       <div>
         <Droppable droppableId="one">
           {(magic) => (
-            <ul ref={magic.innerRef} {...magic.droppableProps}>
+            <Board ref={magic.innerRef} {...magic.droppableProps}>
               <Draggable draggableId="first" index={0}>
                 {(magic) => (
-                  <li
+                  <Card
                     ref={magic.innerRef}
                     {...magic.draggableProps}
                     {...magic.dragHandleProps}
                   >
                     Hello
-                  </li>
+                  </Card>
                 )}
               </Draggable>
-              <Draggable draggableId="second" index={1}>
-                {(magic) => (
-                  <li ref={magic.innerRef} {...magic.draggableProps}>
-                    <span {...magic.dragHandleProps}>🔥</span>
-                    Hello2
-                  </li>
-                )}
-              </Draggable>
-            </ul>
+            </Board>
           )}
         </Droppable>
       </div>
