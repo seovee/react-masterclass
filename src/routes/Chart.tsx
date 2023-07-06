@@ -21,17 +21,27 @@ function Chart({ coinId }: ChartProps) {
   const { isLoading, data } = useQuery<IHistorical[]>(["ohlcv", coinId], () =>
     fetchCoinHistory(coinId)
   );
+  if (!data?.length) {
+    return <h1>차트 데이터가 없습니다.</h1>;
+  }
+
+  const chartData = data?.map((data) => {
+    return {
+      x: new Date(data.time_close),
+      y: [data.open, data.high, data.low, data.close],
+    };
+  });
+
   return (
     <div>
       {isLoading ? (
         "Loading chart..."
       ) : (
         <ReactApexChart
-          type="line"
+          type="candlestick"
           series={[
             {
-              name: "Price",
-              data: data?.map((price) => price.close) ?? [],
+              data: chartData,
             },
           ]}
           options={{
@@ -59,8 +69,11 @@ function Chart({ coinId }: ChartProps) {
               axisTicks: { show: false },
               labels: { show: false },
             },
-            fill: { type: "gradient", gradient: { gradientToColors: ["yellow"] } },
-            colors: ["red"],
+            fill: {
+              type: "gradient",
+              gradient: { gradientToColors: ["brown"] },
+            },
+            colors: ["gold"],
           }}
         />
       )}
