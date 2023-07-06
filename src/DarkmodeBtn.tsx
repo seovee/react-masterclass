@@ -9,20 +9,20 @@ const Container = styled.div`
 const CheckboxLabel = styled.label`
   display: block;
   position: relative;
-  left: 25px;
+  left: 5px;
 `;
 
 const Checkbox = styled.input`
   width: 5rem;
-  height: 2rem;
+  height: 1rem;
   background: white;
-  border-radius: 2em;
+  border-radius: 2rem;
   &::before {
     content: "";
     text-align: center;
     line-height: 50px;
-    width: 100px;
-    height: 50px;
+    width: 70px;
+    height: 40px;
     display: block;
     position: absolute;
     border-radius: 30px;
@@ -35,8 +35,8 @@ const Checkbox = styled.input`
     content: "";
     display: block;
     position: relative;
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     top: 5px;
     left: 5px;
     border-radius: 50%;
@@ -50,7 +50,7 @@ const Checkbox = styled.input`
     }
     &::after {
       background-color: white;
-      left: calc(100% - 25px);
+      left: calc(100% - 47.5px);
     }
   }
 `;
@@ -61,7 +61,7 @@ interface IToggleProps {
 function DarkmodeBtn({ toggleTheme }: IToggleProps) {
   return (
     <Container>
-      <CheckboxLabel></CheckboxLabel>
+      <CheckboxLabel>Dark Mode On/Off</CheckboxLabel>
       <Checkbox type="checkbox" id="toggle" onClick={() => toggleTheme()} />
     </Container>
   );

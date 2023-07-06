@@ -1,12 +1,11 @@
-import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoins } from "../api";
 
 const Container = styled.div`
-  padding: 0px 20px;
-  max-width: 480px;
+  padding: 0px 10px;
+  max-width: 400px;
   margin: 0 auto;
 `;
 const Header = styled.header`
@@ -15,22 +14,35 @@ const Header = styled.header`
   justify-content: center;
   align-items: center;
 `;
-const ConinsList = styled.ul``;
+const ConinsList = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+`;
+
 const Coin = styled.li`
+  display: block;
   background-color: ${(props) => props.theme.boxColor};
-  color: #2f3640;
-  margin-bottom: 10px;
+  box-shadow: 1px 1px ${(props) => props.theme.shadowColor};
+  width: 120px;
+  height: 120px;
+  color: ${(props) => props.theme.textColor};
   border-radius: 10px;
-  font-size: 18px;
+  font-size: 1rem;
+  text-align: center;
+  transition: all 0.15s ease-in;
   a {
     display: flex;
-    align-items: center;
-    padding: 20px;
-    transition: color 0.2s ease-in;
+    flex-direction: column;
+    margin-top: 30px;
+    gap: 10px;
   }
   &:hover {
-    a {
-      color: ${(props) => props.theme.accentColor};
+    transform: scale(110%);
+    font-weight: 700;
+    font-size: 0.9rem;
+    img {
+      transform: rotate(360deg);
     }
   }
 `;
@@ -38,6 +50,7 @@ const Title = styled.h1`
   font-size: 48px;
   font-weight: 700;
   font-style: italic;
+  text-align: center;
   color: ${(props) => props.theme.accentColor};
 `;
 
@@ -49,6 +62,8 @@ const Img = styled.img`
   width: 35px;
   height: 35px;
   margin-right: 10px;
+  margin: 0 auto;
+  transition: all 0.5s ease-in;
 `;
 
 interface ICoin {
@@ -78,7 +93,7 @@ function Coins() {
   return (
     <Container>
       <Header>
-        <Title>Coin</Title>
+        <Title>All Coin</Title>
       </Header>
       {isLoading ? (
         <Loader>Loading...</Loader>
@@ -96,7 +111,7 @@ function Coins() {
                   src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
                   alt="/"
                 />
-                {coin.name} &rarr;
+                {coin.name}
               </Link>
             </Coin>
           ))}

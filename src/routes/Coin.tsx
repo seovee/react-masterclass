@@ -1,4 +1,11 @@
-import { Link, Route, Switch, useLocation, useParams, useRouteMatch } from "react-router-dom";
+import {
+  Link,
+  Route,
+  Switch,
+  useLocation,
+  useParams,
+  useRouteMatch,
+} from "react-router-dom";
 import styled from "styled-components";
 import Price from "./Price";
 import Chart from "./Chart";
@@ -8,6 +15,21 @@ import { fetchCoinInfo, fetchCoinTickers } from "../api";
 interface RouteParams {
   coinId: string;
 }
+
+const HomeBtn = styled(Link)`
+  display: block;
+  position: absolute;
+  left: 0;
+  top: calc(100% - 60px);
+  background-color: ${(props) => props.theme.accentColor};
+  color: white;
+  border-radius: 10px;
+  width: 70px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  margin-bottom: 25px;
+`;
 
 const Title = styled.h1`
   font-size: 48px;
@@ -20,8 +42,11 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 const Header = styled.header`
-  height: 20vh;
+  position: relative;
+  height: 15vh;
   display: flex;
+  font-weight: 800;
+  font-style: italic;
   justify-content: center;
   align-items: center;
 `;
@@ -37,7 +62,7 @@ const Loader = styled.span`
 const Overview = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${(props) => props.theme.boxColor};
   padding: 10px 20px;
   border-radius: 10px;
 `;
@@ -60,34 +85,23 @@ const Description = styled.p`
 const Tabs = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  margin: 25px 0px;
+  margin: 15px 0px;
   gap: 10px;
 `;
 
 const Tab = styled.span<{ isActive: boolean }>`
   text-align: center;
   text-transform: uppercase;
-  font-size: 12px;
-  font-weight: 400;
-  background-color: rgba(0, 0, 0, 0.5);
+  font-size: 1rem;
+  font-weight: ${(props) => (props.isActive ? 700 : 400)};
+  background-color: ${(props) => props.theme.boxColor};
   padding: 7px 0px;
   border-radius: 10px;
-  color: ${(props) => (props.isActive ? props.theme.accentColor : props.theme.boxColor)};
+  color: ${(props) =>
+    props.isActive ? props.theme.accentColor : props.theme.textColor};
   a {
     display: block;
   }
-`;
-
-const HomeBtn = styled(Link)`
-  display: block;
-  background-color: #487eb0;
-  color: white;
-  border-radius: 20px;
-  width: 100px;
-  height: 40px;
-  line-height: 40px;
-  text-align: center;
-  margin-bottom: 25px;
 `;
 
 interface RouteState {
@@ -156,8 +170,9 @@ function Coin() {
   const priceMatch = useRouteMatch("/:coinId/price");
   const chartMatch = useRouteMatch("/:coinId/chart");
 
-  const { isLoading: infoLoading, data: infoData } = useQuery<IInfoData>(["info", coinId], () =>
-    fetchCoinInfo(coinId)
+  const { isLoading: infoLoading, data: infoData } = useQuery<IInfoData>(
+    ["info", coinId],
+    () => fetchCoinInfo(coinId)
   );
   const { isLoading: tickersLoading, data: tickersData } = useQuery<IPriceData>(
     ["tickers", coinId],
@@ -183,9 +198,11 @@ function Coin() {
   return (
     <Container>
       <Header>
-        <Title>{state?.name ? state.name : loading ? "Loading..." : infoData?.name}</Title>
+        <HomeBtn to="/">Home</HomeBtn>
+        <Title>
+          {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
+        </Title>
       </Header>
-      <HomeBtn to="/">👈🏻 Home</HomeBtn>
       {loading ? (
         <Loader>Loading...</Loader>
       ) : (
