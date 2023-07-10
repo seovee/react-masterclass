@@ -22,22 +22,21 @@ const Boards = styled.div`
 
 function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
-  const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
-    if (!destination) return;
-    // setToDos((oldToDos) => {
-    //   const toDosCopy = [...oldToDos];
-    //   // 1) source.index를 지운다
-    //   console.log("Delete item on", source.index);
-    //   console.log(toDosCopy);
-    //   toDosCopy.splice(source.index, 1);
-    //   console.log("Delete item");
-    //   console.log(toDosCopy);
-    //   // 2) 다시 destination.index에 넣는다.
-    //   console.log("Put back", draggableId, "on", destination.index);
-    //   toDosCopy.splice(destination?.index, 0, draggableId);
-    //   console.log(toDosCopy);
-    //   return toDosCopy;
-    // });
+  const onDragEnd = (info: DropResult) => {
+    console.log(info);
+    const { destination, draggableId, source } = info;
+    if (destination?.droppableId === source.droppableId) {
+      // same board movement.
+      setToDos((allBoards) => {
+        const boardCopy = [...allBoards[source.droppableId]];
+        boardCopy.splice(source.index, 1);
+        boardCopy.splice(destination?.index, 0, draggableId);
+        return {
+          ...allBoards,
+          [source.droppableId]: boardCopy,
+        };
+      });
+    }
   };
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -51,4 +50,5 @@ function App() {
     </DragDropContext>
   );
 }
+
 export default App;
