@@ -12,7 +12,20 @@ function ToDo({ text, category, id }: IToDo) {
       const oldToDo = oldToDos[targetIndex];
       const newToDo = { text, id, category: name as any };
       console.log(oldToDo, newToDo);
-      return [...oldToDos.slice(0, targetIndex), newToDo, ...oldToDos.slice(targetIndex + 1)];
+      return [
+        ...oldToDos.slice(0, targetIndex),
+        newToDo,
+        ...oldToDos.slice(targetIndex + 1),
+      ];
+    });
+  };
+  const onDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setToDos((oldToDos) => {
+      const deleteTargetIndex = oldToDos.findIndex((toDo) => toDo.id === id);
+      return [
+        ...oldToDos.slice(0, deleteTargetIndex),
+        ...oldToDos.slice(deleteTargetIndex + 1),
+      ];
     });
   };
   return (
@@ -33,6 +46,7 @@ function ToDo({ text, category, id }: IToDo) {
           Done
         </button>
       )}
+      <button onClick={onDelete}>삭제</button>
     </li>
   );
 }
