@@ -29,12 +29,22 @@ const Circle = styled(motion.div)`
 const boxVariants = {
   hover: { scale: 1.5, rotate: 90 },
   click: { scale: 1, borderRadius: "100px" },
+  drag: {
+    backgroundColor: "rgb(46, 204, 113)",
+    transition: { duration: "3" },
+  },
 };
 
 function App() {
   return (
     <Wrapper>
-      <Box variants={boxVariants} whileHover="hover" whileTap="click" />
+      <Box
+        drag
+        variants={boxVariants}
+        whileHover="hover"
+        whileTap="click"
+        whileDrag={"drag"}
+      />
     </Wrapper>
   );
 }
