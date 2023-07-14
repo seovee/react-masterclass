@@ -12,21 +12,27 @@ const Wrapper = styled(motion.div)`
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  width: 50vw;
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
-  div:first-child,
-  div:last-child {
-    grid-column: span 2;
-  }
 `;
 
 const Box = styled(motion.div)`
   height: 200px;
-  background-color: rgba(255, 255, 255, 1);
-  border-radius: 40px;
+  width: 200px;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 10px;
   font-size: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
+`;
+
+const Circle = styled.div`
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  background-color: blue;
 `;
 
 const Overlay = styled(motion.div)`
@@ -41,12 +47,20 @@ const Overlay = styled(motion.div)`
 
 function App() {
   const [id, setId] = useState<null | string>(null);
+  const [clicked, setClicked] = useState(false);
   return (
     <Wrapper>
       <Grid>
-        {["1", "2", "3", "4"].map((n) => (
-          <Box onClick={() => setId(n)} key={n} layoutId={n} />
-        ))}
+        <AnimatePresence>
+          {["1", "2", "3", "4"].map((n) => (
+            <Box
+              whileHover="hover"
+              onClick={() => setId(n)}
+              key={n}
+              layoutId={n}
+            ></Box>
+          ))}
+        </AnimatePresence>
       </Grid>
       <AnimatePresence>
         {id ? (
