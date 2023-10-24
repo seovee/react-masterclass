@@ -7,6 +7,14 @@ interface RouteParams {
   coinId: string;
 }
 
+const Loader = styled.span`
+  display: block;
+  text-align: center;
+  font-size: 40px;
+  font-weight: 800;
+  color: ${(props) => props.theme.accentColor};
+`;
+
 const Boxes = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -17,13 +25,14 @@ const Boxes = styled.div`
 const Box = styled.div`
   display: block;
   background-color: ${(props) => props.theme.boxColor};
+  border-radius: 15px;
   padding: 10px 0px;
   height: 60px;
   text-align: center;
   font-size: 1rem;
 `;
 
-interface IPriceData {
+interface IIPriceData {
   id: string;
   name: string;
   symbol: string;
@@ -57,41 +66,47 @@ interface IPriceData {
   };
 }
 
-function Price() {
-  const { coinId } = useParams<RouteParams>();
-  const { data: tickersData } = useQuery<IPriceData>(["tickers", coinId], () =>
-    fetchCoinTickers(coinId)
+interface PriceProps {
+  coinId: string;
+}
+
+// props로 coinId를 받아야함
+// useParams로 받으려고 해서 오류난것!
+
+function Price({ coinId }: PriceProps) {
+  const { isLoading: priceLoading, data: priceData } = useQuery<IIPriceData>(
+    ["price", coinId],
+    () => fetchCoinTickers(coinId)
   );
 
   return (
     <>
-      <Boxes>
-        <Box>
-          <span>Price:</span>
-          <span>
-            <span></span>
-            여기가 안되는데, <br></br>이거는 좀 고민을 해봐야겠습니다
-          </span>
-        </Box>
-        <Box>
-          <span>Price:</span>
-          <span>
-            여기가 안되는데, <br></br>이거는 좀 고민을 해봐야겠습니다
-          </span>
-        </Box>
-        <Box>
-          <span>Price:</span>
-          <span>
-            여기가 안되는데, <br></br>이거는 좀 고민을 해봐야겠습니다
-          </span>
-        </Box>
-        <Box>
-          <span>Price:</span>
-          <span>
-            여기가 안되는데, <br></br>이거는 좀 고민을 해봐야겠습니다
-          </span>
-        </Box>
-      </Boxes>
+      {priceLoading ? (
+        <Loader>Loading...</Loader>
+      ) : (
+        <Boxes>
+          <Box>
+            <span>1 </span>
+            <br />
+            <span>{priceData?.quotes.USD.volume_24h}</span>
+          </Box>
+          <Box>
+            <span>2 </span>
+            <br />
+            <span>{priceData?.quotes.USD.percent_change_12h}</span>
+          </Box>
+          <Box>
+            <span>3 </span>
+            <br />
+            <span>{priceData?.quotes.USD.market_cap}</span>
+          </Box>
+          <Box>
+            <span>4 </span>
+            <br />
+            <span>{priceData?.quotes.USD.percent_change_30m}</span>
+          </Box>
+        </Boxes>
+      )}
     </>
   );
 }
